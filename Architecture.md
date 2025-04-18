@@ -2,12 +2,14 @@
 
 ```mermaid
 graph TD
-    A[core-loop Module] -->|Depends on| B[LLM]
-    A[core-loop Module] -->|Depends on| C[Requests]
-    A[core-loop Module] -->|Depends on| D[Database]
-    B[LLM] -->|Depends on| E[Config]
-    C[Requests] -->|Depends on| E[Config]
-    D[Database] -->|Depends on| E[Config]
+    CR[core-loop Module] -->|Depends on| LLM
+    CR[core-loop Module] -->|Depends on| Gitlab
+    Gitlab -->|Depends on| Requests
+    LLM -->|Depends on| Requests
+    CR[core-loop Module] -->|Depends on| Database
+    LLM -->|Depends on| Config
+    Requests -->|Depends on| Config
+    Database -->|Depends on| Config
 ```
 
 ### core-loop
