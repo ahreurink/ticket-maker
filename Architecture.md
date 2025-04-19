@@ -23,3 +23,14 @@ graph TD
 - **Structure**:
   - `src/main/java`: Contains the main Java source files.
   - `src/test/java`: Contains test classes for the module.
+
+
+
+## As Built:
+What Cursor came up with:
+```mermaid
+graph TD
+    core[core module] -->|requires| llm[llm module]
+    llm -->|requires| request[request module]
+    request -->|requires| java.net.http[Java HTTP Module]
+```
