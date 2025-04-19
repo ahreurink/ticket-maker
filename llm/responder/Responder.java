@@ -8,12 +8,16 @@ import java.util.Optional;
  */
 public class Responder {
     static final String model = "gemma3:1b";
-    static final String ERROR_LITERAL = "\"I_CANNOT_ANSWER_YOUR_REQUEST\"";
+    static final String ERROR_LITERAL = "\\\"I_CANNOT_ANSWER_YOUR_REQUEST\\\"";
+    static final String TICKET_DIVIDER = "\\\"#########\\\"";
 
     static final String prePrompt = "For the following question: Restructure into the format of a Jira Ticket.\\n" 
     + "Do not make up extra details, but if you feel some information is missing, add a placeholder.\\n" 
     + "Do not ask clarifying questions, just give the plain answer.\\n"
-    + "If for any reason you cannot answer the question, respond with " + ERROR_LITERAL + ".";
+    + "Restrict yourself to the following fields: summary, description, priority\\n"
+    + "If you cannot reasonably answer the question, respond with " + ERROR_LITERAL + ".\\n"
+    + "Can you put the text in a markdown block?\\n";
+    // + "Divide the text of the ticket from your response to the question introducing the text of the ticket with the text " + TICKET_DIVIDER + ".\\n";
 
     private StringBuilder createPrompt(String input) {
         StringBuilder prompt = new StringBuilder(prePrompt);
@@ -35,8 +39,9 @@ public class Responder {
         StringBuilder prompt = createPrompt(input);
 
         String jsonRequest = createJsonRequest(model, prompt).toString();
-        System.out.println(" json : " + jsonRequest);
+        System.out.println(" request: " + jsonRequest);
         Optional<String> response = new Client().post(jsonRequest);
+        System.out.println(" response : " + response.get());
         if(response.isEmpty()) {
             throw new RuntimeException("Did not receive a response from the LLM");
         }
