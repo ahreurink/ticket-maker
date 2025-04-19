@@ -39,9 +39,7 @@ public class Responder {
         StringBuilder prompt = createPrompt(input);
 
         String jsonRequest = createJsonRequest(model, prompt).toString();
-        System.out.println(" request: " + jsonRequest);
         Optional<String> response = new Client().post(jsonRequest);
-        System.out.println(" response : " + response.get());
         if(response.isEmpty()) {
             throw new RuntimeException("Did not receive a response from the LLM");
         }
