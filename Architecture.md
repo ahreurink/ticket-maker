@@ -24,8 +24,6 @@ graph TD
   - `src/main/java`: Contains the main Java source files.
   - `src/test/java`: Contains test classes for the module.
 
-
-
 ## As Built:
 What Cursor came up with:
 ```mermaid
