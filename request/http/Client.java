@@ -17,9 +17,11 @@ public class Client {
     String address = "127.0.0.1";
     int port = 11434;
 
+    private static final String GITHUB_BASE_URL = "https://api.github.com/repos/";
+
     HttpClient client = HttpClient.newHttpClient();
 
-    public Optional<String> post(String requestBody) {
+    public Optional<String> postQuery(String requestBody) {
     try {
             URI uri = new URI("http://" + address + ":" + port + "/api/generate");
 
@@ -46,6 +48,29 @@ public class Client {
         } catch (URISyntaxException | IOException | InterruptedException e) {
             e.printStackTrace();
             return Optional.empty();
+        }
+    }
+
+    public void postTicket(String owner, String repo, String token, String requestBody) {
+    try {
+            URI uri = new URI(GITHUB_BASE_URL + owner + "/" + repo + "/issues");
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(uri)
+                    .header("Accept", "application/vnd.github+json")
+                    .header("Authorization", "Bearer " + token)
+                    .header("X-GitHub-Api-Version", "2022-11-28")
+                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if(response.statusCode() != 200) {
+                throw new RuntimeException("Github returned error: " + response.statusCode() );
+            }
+        } catch (URISyntaxException | IOException | InterruptedException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Github returned error: " + e.getMessage());
         }
     }
 }
