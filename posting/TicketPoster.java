@@ -1,7 +1,6 @@
 package posting;
 
-import http.Client;
-import java.util.Optional;
+import requests.Client;
 
 abstract class TicketPoster {
     protected Client client = new Client();

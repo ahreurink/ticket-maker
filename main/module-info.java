@@ -12,6 +12,6 @@ This module, `core-loop`, is designed to provide the base loop of promting the l
 To use the `core-loop` module, ensure that it is included as a dependency in your project’s module descriptor. 
 You can access the exported packages and utilize the functionalities provided by this module.
 */
-module core {
+module main {
     requires llm;
 }

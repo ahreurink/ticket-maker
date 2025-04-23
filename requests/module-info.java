@@ -1,7 +1,7 @@
 /*
  * HTTP requests.
 */
-module request {
-    exports http;
+module requests {
+    exports requests;
     requires java.net.http;
 }

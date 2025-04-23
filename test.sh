@@ -1,6 +1,3 @@
-echo Building...
-./build.sh
-
 echo Testing...
 MODULE=$1
 case $MODULE in
@@ -12,10 +9,8 @@ case $MODULE in
         ./build.sh
         java -cp out/llm responder.ResponderTest
         ;;
-    responder)
-        java -cp  out/request:out/llm responder.ResponderTest ;;
-    request)
-        java -cp out/request:out/tickets posting.GitHubTicketPosterTest ;;
+    posting)
+        java -cp out/requests:out/posting posting.GitHubTicketPosterTest ;;
     *)
         echo "Unknown module: $MODULE"
         echo "Available modules: core-loop, llm, responder, request"

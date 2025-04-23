@@ -1,6 +1,6 @@
-package responder;
+package llm;
 
-import http.Client;
+import requests.Client;
 import java.util.Optional;
 /*
  * The Responder to LLM prompts. Run respond to get the configured LLM to respond. 
@@ -39,7 +39,7 @@ public class Responder {
         StringBuilder prompt = createPrompt(input);
 
         String jsonRequest = createJsonRequest(model, prompt).toString();
-        Optional<String> response = new Client().post(jsonRequest);
+        Optional<String> response = new Client().postQuery(jsonRequest);
         if(response.isEmpty()) {
             throw new RuntimeException("Did not receive a response from the LLM");
         }

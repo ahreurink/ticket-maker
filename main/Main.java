@@ -2,7 +2,7 @@ package main;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import responder.Responder;
+import llm.Responder;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -41,7 +41,7 @@ public class Main {
         }
     }
     public static void main(String[] args) {
-        try(ExecutorService service = Executors.newSingleThreadExecutor()){
+        try(ExecutorService service = Executors.newSingleThreadExecutor()) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Prompt>");
             String prompt = reader.readLine();
