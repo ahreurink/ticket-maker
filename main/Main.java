@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import llm.Responder;
 
+import posting.TicketPoster;
+import posting.GitHubTicketPoster;
+
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -50,6 +53,12 @@ public class Main {
 
             String response = responseFuture.get();
             System.out.println(cleanMarkdownBlock(unescape(response)));
+            System.out.print("Want to post to GitHub? (y/n) ");
+            String check = reader.readLine();
+            if(check.equals("y")) {
+                String[] labels = {"test"};
+                new GitHubTicketPoster("ahreurink", "ticket-maker").post("Default title", response, "ahreurink", labels);
+            }
         } catch (IOException | ExecutionException e) {
             System.err.println("Error reading input: " + e.getMessage());
         } catch (InterruptedException e) {

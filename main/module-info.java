@@ -14,4 +14,5 @@ You can access the exported packages and utilize the functionalities provided by
 */
 module main {
     requires llm;
+    requires posting;
 }
