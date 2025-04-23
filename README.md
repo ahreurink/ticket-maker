@@ -3,7 +3,9 @@ This ticket maker uses [ollama](https://ollama.com/) models (GEMMA3:1b) to struc
 It uses no dependencies and java9 modules on purpose as an excercise.
 
 ## Getting Started
-To get started with this project, clone the repository and navigate to the project directory. Run directly with `java`.
+To get started with this project, clone the repository and navigate to the project directory. 
+Run Gemma with `ollama run gemma3:1b`
+Run the ticket maker directly with `java`.
 
 ## Building the Project
 Built with `./build.sh` and run with `./run.sh`. Tested with java Temurin 11.0..27
