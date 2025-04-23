@@ -14,9 +14,8 @@ public class Responder {
     static final String prePrompt = "For the following question: Restructure into the format of a Jira Ticket.\\n" 
     + "Do not make up extra details, but if you feel some information is missing, add a placeholder.\\n" 
     + "Do not ask clarifying questions, just give the plain answer.\\n"
-    + "Restrict yourself to the following fields: summary, description, priority\\n"
-    + "If you cannot reasonably answer the question, respond with " + ERROR_LITERAL + ".\\n"
-    + "Can you put the text in a markdown block?\\n";
+    + "IMPORTANT: Restrict yourself to the following fields: summary, description, priority\\n"
+    + "You must put the text in a markdown block?\\n";
     // + "Divide the text of the ticket from your response to the question introducing the text of the ticket with the text " + TICKET_DIVIDER + ".\\n";
 
     private StringBuilder createPrompt(String input) {
