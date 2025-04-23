@@ -9,9 +9,9 @@ public class GitHubTicketPosterTest {
         
         String summary = "Test GitHub Issue";
         String description = "This is a test issue created via the API";
-        String priority = "ahreurink";
+        String assignee = "ahreurink";
         String[] labels = {"Test"};
         
-        poster.post(summary, description, priority, labels);
+        poster.post(summary, description, assignee, labels);
     }
 } 

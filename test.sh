@@ -1,22 +1,23 @@
 echo Building...
 ./build.sh
 
+MODULE_PATHS=$(find out -mindepth 1 -maxdepth 1 -type d | tr '\n' ':' | sed 's/:$//')
 echo Testing...
 MODULE=$1
 case $MODULE in
-    core-loop)
-        echo "No test for core-loop"
+    main)
+        echo "No test for main"
         ;;
     llm)
         echo "Building and running llm module..."
         ./build.sh
-        java -cp out/llm responder.ResponderTest
+        java -cp $MODULE_PATHS responder.ResponderTest
         ;;
     posting)
-        java -cp out/requests:out/posting posting.GitHubTicketPosterTest ;;
+        java -cp $MODULE_PATHS posting.GitHubTicketPosterTest ;;
     *)
         echo "Unknown module: $MODULE"
-        echo "Available modules: core-loop, llm, responder, request"
+        echo "Available modules: $(find out -mindepth 1 -maxdepth 1 -type d | sed 's/out\///' | tr '\n' ' ')"
         exit 1
         ;;
 esac
