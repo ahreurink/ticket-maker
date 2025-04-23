@@ -69,7 +69,7 @@ public class Client {
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if(response.statusCode() != 200) {
+            if(response.statusCode() < 200 || response.statusCode() >= 300) {
                 System.err.println("Github returned error: " + response.statusCode() + " \n " + response.body() );
                 throw new RuntimeException("Github returned error: " + response.statusCode() );
             }

@@ -19,7 +19,8 @@ public class Main {
     static final int TIMEOUT_SECONDS = 10;
     static String unescape(String sentence) {
         return sentence.replaceAll("\\\\n", "\n")
-                       .replaceAll("\\\\t", "\t");
+                       .replaceAll("\\\\t", "\t")
+                       .replaceAll("\\\\\"", "\"");
     }
 
     static String cleanMarkdownBlock(String sentence) {
