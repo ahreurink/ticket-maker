@@ -28,12 +28,14 @@ public class GitHubTicketPoster extends TicketPoster {
             jsonBody.append("\"")
                 .append(labels[i])
                 .append("\"");
-            if (i != labels.length)
+            if (i != labels.length - 1)
                 jsonBody.append(",");
         }
         jsonBody.append("]");
         
         jsonBody.append("}");
+
+        System.out.println("Posting to GitHub: " + jsonBody.toString());
         
         client.postTicket(owner, repo, token, jsonBody.toString());
     }

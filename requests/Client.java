@@ -37,6 +37,10 @@ public class Client {
                 System.err.println("Model returned error: " + response.statusCode() );
                 return Optional.empty();
             }
+            if(!response.body().contains("\"done\":false")) {
+                System.err.println("Model returned error: " + response.body() );
+                return Optional.empty();
+            }
             String[] responseObjects = response.body().split("\n");
             String responseText = Arrays.stream(responseObjects)
                 .filter(str -> str.endsWith("\"done\":false}"))
@@ -66,6 +70,7 @@ public class Client {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if(response.statusCode() != 200) {
+                System.err.println("Github returned error: " + response.statusCode() + " \n " + response.body() );
                 throw new RuntimeException("Github returned error: " + response.statusCode() );
             }
         } catch (URISyntaxException | IOException | InterruptedException e) {

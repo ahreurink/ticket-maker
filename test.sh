@@ -1,3 +1,6 @@
+echo Building...
+./build.sh
+
 echo Testing...
 MODULE=$1
 case $MODULE in
