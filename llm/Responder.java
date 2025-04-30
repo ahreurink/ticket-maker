@@ -14,11 +14,12 @@ public class Responder {
     static final String prePrompt = "For the following question: Restructure into the format of a Jira Ticket.\\n" 
     + "Do not make up extra details, but if you feel some information is missing, add a placeholder.\\n" 
     + "Do not ask clarifying questions, just give the plain answer.\\n"
-    + "IMPORTANT: Restrict yourself to the following fields: summary, description, priority\\n"
+    + "IMPORTANT: Restrict yourself to the following fields: 1. summary, 2. description, 3. priority\\n"
     + "DO NOT give any introduction to the answer, don't aknowledge the request in any way, just answer.\\n";
 
     static final String titlePrePrompt = "The following is an issue text. Can you summarize it in a title?\\n"
-    + "DO NOT give any introduction to the answer, don't aknowledge the request in any way, just answer.\\n";
+    + "DO NOT give any introduction to the answer, don't aknowledge the request in any way, just answer.\\n"
+    + "Only a single sentence\\n";
 
     private StringBuilder createPrompt(String input) {
         StringBuilder prompt = new StringBuilder(prePrompt);
