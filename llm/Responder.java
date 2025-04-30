@@ -15,11 +15,19 @@ public class Responder {
     + "Do not make up extra details, but if you feel some information is missing, add a placeholder.\\n" 
     + "Do not ask clarifying questions, just give the plain answer.\\n"
     + "IMPORTANT: Restrict yourself to the following fields: summary, description, priority\\n"
-    + "You must put the text in a markdown block?\\n";
-    // + "Divide the text of the ticket from your response to the question introducing the text of the ticket with the text " + TICKET_DIVIDER + ".\\n";
+    + "You must put the text in a markdown block\\n";
+
+    static final String titlePrePrompt = "The following is an issue text. Can you summarize it in a title?\\n"
+    + "You must put the text in a markdown block\\n";
 
     private StringBuilder createPrompt(String input) {
         StringBuilder prompt = new StringBuilder(prePrompt);
+        prompt.append(input);
+        return prompt;
+    }
+    
+    private StringBuilder createTitlePrompt(String input) {
+        StringBuilder prompt = new StringBuilder(titlePrePrompt);
         prompt.append(input);
         return prompt;
     }
@@ -34,7 +42,7 @@ public class Responder {
         return jsonRequest;
     }
 
-    public String respond(String input) {
+    public String createResponse(String input) {
         StringBuilder prompt = createPrompt(input);
 
         String jsonRequest = createJsonRequest(model, prompt).toString();
@@ -42,10 +50,17 @@ public class Responder {
         if(response.isEmpty()) {
             throw new RuntimeException("Did not receive a response from the LLM");
         }
-        String responseText = response.get();
-        if(responseText.contains(ERROR_LITERAL)) {
-            throw new RuntimeException("Response of the LLM contained the error literal");
+        return response.get();
+    }
+
+    public String createTitle(String input) {
+        StringBuilder prompt = createTitlePrompt(input);
+
+        String jsonRequest = createJsonRequest(model, prompt).toString();
+        Optional<String> response = new Client().postQuery(jsonRequest);
+        if(response.isEmpty()) {
+            throw new RuntimeException("Did not receive a response from the LLM");
         }
-        return responseText;
+        return response.get();
     }
 }

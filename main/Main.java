@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import llm.Responder;
 
-import posting.TicketPoster;
 import posting.GitHubTicketPoster;
 
 import java.io.IOException;
@@ -24,7 +23,17 @@ public class Main {
     }
 
     static String cleanMarkdownBlock(String sentence) {
-        return sentence.substring(sentence.indexOf("```markdown") + 11, sentence.lastIndexOf("```"));
+        int beginIndex = sentence.indexOf("```markdown");
+        if(sentence.indexOf("```markdown") < 0)
+            beginIndex = 0;
+        else 
+            beginIndex += 11;
+        int endIndex = sentence.lastIndexOf("```");
+        if(sentence.lastIndexOf("```") < 0)
+            endIndex = sentence.length();
+        
+
+        return sentence.substring(beginIndex, endIndex);
     }
 
     static void printLoading(Future<String> responseFuture) throws InterruptedException {
@@ -49,16 +58,25 @@ public class Main {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Prompt>");
             String prompt = reader.readLine();
-            Future<String> responseFuture = service.submit(() -> new Responder().respond(prompt));
-            printLoading(responseFuture);
 
+            Future<String> responseFuture = service.submit(() -> new Responder().createResponse(prompt));
+            printLoading(responseFuture);
             String response = responseFuture.get();
+
             System.out.println(cleanMarkdownBlock(unescape(response)));
             System.out.print("Want to post to GitHub? (y/n) ");
             String check = reader.readLine();
+
             if(check.equals("y")) {
+                String body = cleanMarkdownBlock(unescape(response));
+                Future<String> titleFuture = service.submit(() -> new Responder().createTitle(response));
+                printLoading(titleFuture);
+                String titleText = titleFuture.get();
+                
+                String title = cleanMarkdownBlock(unescape(titleText));
+
                 String[] labels = {"test"};
-                new GitHubTicketPoster("ahreurink", "ticket-maker").post("Default title", response, "ahreurink", labels);
+                new GitHubTicketPoster("ahreurink", "ticket-maker").post(title, body, "ahreurink", labels);
             }
         } catch (IOException | ExecutionException e) {
             System.err.println("Error reading input: " + e.getMessage());

@@ -1,5 +1,7 @@
 package posting;
 
+import posting.JsonBuilder;
+
 public class GitHubTicketPoster extends TicketPoster {
     private final String token;
     private final String owner;
@@ -13,30 +15,13 @@ public class GitHubTicketPoster extends TicketPoster {
 
     @Override
     public void post(String title, String body, String assignee, String[] labels) {
-        StringBuilder jsonBody = new StringBuilder();
-        jsonBody.append("{")
-                .append("\"title\": \"").append(title.replace("\"", "\\\"")).append("\",")
-                .append("\"body\": \"").append(body.replace("\"", "\\\"")).append("\"");
-        
-        jsonBody.append(",\"assignee\": \"")
-                .append(assignee)
-                .append("\"");
-        
-        jsonBody.append(",\"labels\": [");
-        for (int i = 0; i < labels.length; i++) {
+        JsonBuilder jsonBuilder = new JsonBuilder()
+                                        .addField("title", title)
+                                        .addField("body", body);
+                                        //.addField("assignee", assignee)
+                                        //.addArray("labels", labels);
+        System.out.println("Posting to GitHub: " + jsonBuilder.toString());
 
-            jsonBody.append("\"")
-                .append(labels[i])
-                .append("\"");
-            if (i != labels.length - 1)
-                jsonBody.append(",");
-        }
-        jsonBody.append("]");
-        
-        jsonBody.append("}");
-
-        System.out.println("Posting to GitHub: " + jsonBody.toString());
-        
-        client.postTicket(owner, repo, token, jsonBody.toString());
+        client.postTicket(owner, repo, token, jsonBuilder.toString()); //
     }
 } 

@@ -4,7 +4,7 @@ public class ResponderTest {
     public static void main(String[] args) {
         Responder responder = new Responder();
         String prompt1 = "Show the user a list of 5 flowers";
-        String response1 = responder.respond(prompt1);
+        String response1 = responder.createResponse(prompt1);
 
         if (response1.contains("```markdown")) {
             System.out.println("Test passed!");
