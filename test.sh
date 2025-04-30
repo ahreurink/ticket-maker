@@ -14,7 +14,8 @@ case $MODULE in
         java -cp $MODULE_PATHS responder.ResponderTest
         ;;
     posting)
-        java -cp $MODULE_PATHS posting.GitHubTicketPosterTest ;;
+        java -cp $MODULE_PATHS posting.GitHubTicketPosterTest
+        java -cp $MODULE_PATHS posting.JsonBuilderTest ;;
     *)
         echo "Unknown module: $MODULE"
         echo "Available modules: $(find out -mindepth 1 -maxdepth 1 -type d | sed 's/out\///' | tr '\n' ' ')"
