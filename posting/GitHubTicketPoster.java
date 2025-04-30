@@ -12,12 +12,11 @@ public class GitHubTicketPoster extends TicketPoster {
     }
 
     @Override
-    public void post(String title, String body, String assignee, String[] labels) {
+    public void post(String title, String body, String[] labels) {
         JsonBuilder jsonBuilder = new JsonBuilder()
                                         .addField("title", title)
-                                        .addField("body", body);
-                                        //.addField("assignee", assignee)
-                                        //.addArray("labels", labels);
+                                        .addField("body", body)
+                                        .addArray("labels", labels);
         System.out.println("Posting to GitHub: " + jsonBuilder.toString());
 
         client.postTicket(owner, repo, token, jsonBuilder.toString()); //

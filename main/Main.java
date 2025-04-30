@@ -63,7 +63,7 @@ public class Main {
 
                 String[] labels = {"test"};
                 new GitHubTicketPoster("ahreurink", "ticket-maker")
-                    .post(titleText, response, "ahreurink", labels);
+                    .post(titleText, response, labels);
             }
             else {
                 System.out.println("Not posting to GitHub");
