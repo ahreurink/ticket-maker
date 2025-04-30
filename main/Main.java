@@ -22,20 +22,6 @@ public class Main {
                        .replaceAll("\\\\\"", "\"");
     }
 
-    static String cleanMarkdownBlock(String sentence) {
-        int beginIndex = sentence.indexOf("```markdown");
-        if(sentence.indexOf("```markdown") < 0)
-            beginIndex = 0;
-        else 
-            beginIndex += 11;
-        int endIndex = sentence.lastIndexOf("```");
-        if(sentence.lastIndexOf("```") < 0)
-            endIndex = sentence.length();
-        
-
-        return sentence.substring(beginIndex, endIndex);
-    }
-
     static void printLoading(Future<String> responseFuture) throws InterruptedException {
         LocalDateTime timeOut = LocalDateTime.now().plusSeconds(TIMEOUT_SECONDS);
         Thread.sleep(100);
@@ -63,20 +49,24 @@ public class Main {
             printLoading(responseFuture);
             String response = responseFuture.get();
 
-            System.out.println(cleanMarkdownBlock(unescape(response)));
+            System.out.println(unescape(response));
             System.out.print("Want to post to GitHub? (y/n) ");
             String check = reader.readLine();
 
             if(check.equals("y")) {
-                String body = cleanMarkdownBlock(unescape(response));
+                String body = unescape(response);
                 Future<String> titleFuture = service.submit(() -> new Responder().createTitle(response));
                 printLoading(titleFuture);
                 String titleText = titleFuture.get();
                 
-                String title = cleanMarkdownBlock(unescape(titleText));
+                String title = unescape(titleText);
 
                 String[] labels = {"test"};
-                new GitHubTicketPoster("ahreurink", "ticket-maker").post(title, body, "ahreurink", labels);
+                new GitHubTicketPoster("ahreurink", "ticket-maker")
+                    .post(title, body, "ahreurink", labels);
+            }
+            else {
+                System.out.println("Not posting to GitHub");
             }
         } catch (IOException | ExecutionException e) {
             System.err.println("Error reading input: " + e.getMessage());

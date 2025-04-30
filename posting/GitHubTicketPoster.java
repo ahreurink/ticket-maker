@@ -1,7 +1,5 @@
 package posting;
 
-import posting.JsonBuilder;
-
 public class GitHubTicketPoster extends TicketPoster {
     private final String token;
     private final String owner;

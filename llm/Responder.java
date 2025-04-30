@@ -15,10 +15,10 @@ public class Responder {
     + "Do not make up extra details, but if you feel some information is missing, add a placeholder.\\n" 
     + "Do not ask clarifying questions, just give the plain answer.\\n"
     + "IMPORTANT: Restrict yourself to the following fields: summary, description, priority\\n"
-    + "You must put the text in a markdown block\\n";
+    + "DO NOT give any introduction to the answer, don't aknowledge the request in any way, just answer.\\n";
 
     static final String titlePrePrompt = "The following is an issue text. Can you summarize it in a title?\\n"
-    + "You must put the text in a markdown block\\n";
+    + "DO NOT give any introduction to the answer, don't aknowledge the request in any way, just answer.\\n";
 
     private StringBuilder createPrompt(String input) {
         StringBuilder prompt = new StringBuilder(prePrompt);
