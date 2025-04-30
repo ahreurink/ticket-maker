@@ -1,0 +1,7 @@
+{"title": "Bot implementation for automatically generating Jira tickets from user-defined messages.","body": "**Jira Ticket**
+
+*   **Summary:** Bot Functionality - Message Delivery
+*   **Description:** Design and implement a bot that receives a user-defined message, and automatically creates a new Jira ticket with the specified project and issue type.
+*   **Priority:** High
+
+"}

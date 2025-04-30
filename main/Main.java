@@ -48,13 +48,13 @@ public class Main {
             Future<String> responseFuture = service.submit(() -> new Responder().createResponse(prompt));
             printLoading(responseFuture);
             String response = responseFuture.get();
+            String body = unescape(response);
 
-            System.out.println(unescape(response));
+            System.out.println(body);
             System.out.print("Want to post to GitHub? (y/n) ");
             String check = reader.readLine();
 
             if(check.equals("y")) {
-                String body = unescape(response);
                 Future<String> titleFuture = service.submit(() -> new Responder().createTitle(response));
                 printLoading(titleFuture);
                 String titleText = titleFuture.get();
@@ -63,7 +63,7 @@ public class Main {
 
                 String[] labels = {"test"};
                 new GitHubTicketPoster("ahreurink", "ticket-maker")
-                    .post(title, body, "ahreurink", labels);
+                    .post(titleText, response, "ahreurink", labels);
             }
             else {
                 System.out.println("Not posting to GitHub");
